@@ -1,7 +1,7 @@
 package proxy
 
 import (
-	"errors"
+	"fmt"
 	"net/http"
 	"net/url"
 	"sync/atomic"
@@ -12,7 +12,8 @@ type ProxyFunc func(r *http.Request) (*url.URL, error)
 
 func RoundRobinProxySwitcher(proxyURLS ...string) (ProxyFunc, error) {
 	if len(proxyURLS) < 1 {
-		return nil, errors.New("proxy URL is empty")
+		fmt.Println("没有设置代理列表")
+		return nil, nil
 	}
 
 	urls := make([]*url.URL, len(proxyURLS))
